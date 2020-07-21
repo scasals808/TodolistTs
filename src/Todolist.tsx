@@ -56,7 +56,9 @@ export function Todolist(props: PropsType) {
     }
 
     return <div>
-        <h3>{props.title}<button onClick={onClickRemoveTodoList}>X</button></h3>
+        <h3>{props.title}
+            <button onClick={onClickRemoveTodoList}>X</button>
+        </h3>
         <div>
             <input
                 type='text'
@@ -86,7 +88,7 @@ export function Todolist(props: PropsType) {
                         />
                         <span>{task.title} </span>
                         <button onClick={removeTask}>x
-                        </button >
+                        </button>
                     </li>
                 )
             })}
