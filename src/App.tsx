@@ -27,7 +27,7 @@ function App() {
 
     let [todoLists, setTodoLists] = useState<Array<TodoListType>>([
         {id: todoListId1, title: "What to learn", filter: 'all'},
-        {id: todoListId2, title: "What to buy", filter: 'active'}
+        {id: todoListId2, title: "What to learn next", filter: 'active'}
     ])
 
     let [tasks, setTasks] = useState<TaskStateType>({
@@ -49,7 +49,7 @@ function App() {
         setTasks({...tasks})
     }
 
-    function changeStatus(id: string, isDone: boolean, todoListID: string) {
+    function changeTaskStatus(id: string, isDone: boolean, todoListID: string) {
         let todoListTasks = tasks[todoListID];
         let task = todoListTasks.find(t => t.id === id);
         if (task) {
@@ -65,12 +65,16 @@ function App() {
         setTasks({...tasks})//перерисовка
     }
 
-    function changeFilter(newFilterValue: FilterValuesType, todoListID: string) {
+    function changeTodolistFilter(newFilterValue: FilterValuesType, todoListID: string) {
         let todoList = todoLists.find(tl => tl.id === todoListID)
         if (todoList) {
             todoList.filter = newFilterValue
             setTodoLists([...todoLists])
         }
+    }
+
+    function removeTodoList(todoListID: string) {
+        setTodoLists(todoLists.filter(tl => tl.id !== todoListID))
     }
 
     return (
@@ -92,9 +96,10 @@ function App() {
                             filter={tl.filter}
                             tasks={tasksForTodolist}
                             removeTask={removeTask}
-                            changeFilter={changeFilter}
+                            changeTodolistFilter={changeTodolistFilter}
                             addTask={addTask}
-                            changeStatus={changeStatus}
+                            changeTaskStatus={changeTaskStatus}
+                            removeTodoList={removeTodoList}
                         />
                     )
                 })
