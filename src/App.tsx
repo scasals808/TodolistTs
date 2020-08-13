@@ -14,7 +14,7 @@ export type TaskType = {
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
-type TodoListType = {
+export type TodoListType = {
     id: string
     title: string
     filter: FilterValuesType
@@ -75,6 +75,7 @@ function App() {
         if (todoList) {
             todoList.title = newTitle
             setTodoLists([...todoLists])
+            //сетаем в стейт копию массива чтобы реакт отреагировал перерисовкой, если засетать не копию перерисовки не будет
         }
     }
 
@@ -95,6 +96,8 @@ function App() {
 
     function removeTodoList(todoListID: string) {
         setTodoLists(todoLists.filter(tl => tl.id !== todoListID))
+        delete tasks[todoListID]
+        setTasks({...tasks})
     }
 
     function addTodoList(title: string) {

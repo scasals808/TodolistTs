@@ -17,6 +17,7 @@ export function EditableSpan(props: PropsType) {
     }
 
     function deActivatedEditMode() {
+        debugger;
         setEditMode(false)
         props.saveNewTitle(title)
     }
