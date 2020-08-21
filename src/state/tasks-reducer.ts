@@ -52,23 +52,13 @@ export const tasksReducer = (state: TaskStateType, action: ActionsTypes) => {
             return {...state, [action.todolistId]: [newTask, ...state[action.todolistId]]}
         case CHANGE_TASK:
             return {
-                ...state, [action.todolistId]: [...state[action.todolistId].map(task => {
-                    if (task.id !== action.taskId) {
-                        return task
-                    } else {
-                        return {...task, isDone: action.isDone}
-                    }
-                })]
+                ...state,
+                [action.todolistId]: changeTitleAndStatus(state[action.todolistId], action.taskId, action.isDone)
             }
         case CHANGE_TASK_TITLE:
             return {
-                ...state, [action.todolistId]: state[action.todolistId].map(task => {
-                    if (task.id !== action.taskId) {
-                        return task
-                    } else {
-                        return {...task, title: action.title}
-                    }
-                })
+                ...state,
+                [action.todolistId]: changeTitleAndStatus(state[action.todolistId], action.taskId, action.title)
             }
         case ADD_TODOLIST:
             return {
@@ -100,6 +90,16 @@ export const changeTaskTitleAC = (taskId: string, title: string, todolistId: str
     return {type: 'CHANGE_TASK_TITLE', taskId, title, todolistId}
 }
 
+let changeTitleAndStatus = (tasks: Array<TaskType>, taskId: string, property: string | boolean): Array<TaskType> => {
+    let propertyName = typeof property === 'string' ? 'title' : 'isDone'
+    return [...tasks.map(task => {
+        if (task.id !== taskId) {
+            return task
+        } else {
+            return {...task, [propertyName]: property}
+        }
+    })]
+}
 
 
 
