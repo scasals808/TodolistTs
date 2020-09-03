@@ -1,12 +1,10 @@
-import React, {useReducer} from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
-import {v1} from 'uuid';
 import {AddItemForm} from "./AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
-import {addTodoListAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodoListAC, todoListsReducer} from "./state/todolists-reducer";
+import {addTodoListAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodoListAC} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 
@@ -32,23 +30,22 @@ function AppWithRedux() {
     const dispatch = useDispatch()
     const todoLists = useSelector<AppRootStateType, Array<TodoListType>>(state => state.todoLists)
 
-    function changeTodoListTitle(todoListID: string, newTitle: string) {
+    const changeTodoListTitle = useCallback((todoListID: string, newTitle: string) => {
         dispatch(changeTodolistTitleAC(todoListID, newTitle))
-    }
+    }, [dispatch])
 
-    function changeTodolistFilter( todoListID: string, newFilterValue: FilterValuesType) {
+    const changeTodolistFilter = useCallback(( todoListID: string, newFilterValue: FilterValuesType) =>  {
         dispatch(changeTodolistFilterAC(todoListID, newFilterValue))
-    }
+    }, [dispatch])
 
-    function removeTodoList(todoListID: string) {
+    const removeTodoList = useCallback((todoListID: string) => {
         const action = removeTodoListAC(todoListID)
         dispatch(action)
+    }, [dispatch])
 
-    }
-
-    function addTodoList(title: string) {
+    const addTodoList = useCallback((title: string) =>  {
         dispatch(addTodoListAC(title))
-    }
+    },[dispatch])
 
     return (
         <div className="App">
@@ -66,9 +63,9 @@ function AppWithRedux() {
             <Container fixed>
                 <Grid container style={{padding: '20px'}}><AddItemForm addItem={addTodoList}/></Grid>
                 <Grid container spacing={5}>{
-                    todoLists.map(tl => {
+                    todoLists.map((tl,index) => {
                         return (
-                            <Grid item>
+                            <Grid item key={index}>
                                 <Paper style={{padding: '20px'}} elevation={6}>
                                     <Todolist
                                         todolist={tl}

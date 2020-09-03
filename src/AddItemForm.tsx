@@ -6,7 +6,7 @@ type PropsType = {
     addItem: (title: string) => void
 }
 
-export function AddItemForm(props: PropsType) {
+export const AddItemForm = React.memo((props: PropsType) => {
     let [itemName, setItemName] = useState<string>('')
     let [error, setError] = useState<string | null>(null)
 
@@ -16,6 +16,7 @@ export function AddItemForm(props: PropsType) {
     }
 
     function onAddItemKeyPressed(event: KeyboardEvent<HTMLInputElement>) {
+        if(error !== null) setError(null)
         if (event.key === 'Enter') {
             addItemLocal()
         }
@@ -46,4 +47,4 @@ export function AddItemForm(props: PropsType) {
             </IconButton>
         </div>
     )
-}
+})
