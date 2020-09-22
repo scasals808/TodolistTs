@@ -48,24 +48,24 @@ function AppWithReducers() {
         ]
     });
 
-    function removeTask(taskId: string, todoListID: string) {
-        const action = removeTaskAC(taskId, todoListID)
-        dispatchToTasksReducer(action)
-    }
-
-    function changeTaskStatus(taskId: string, isDone: boolean, todoListID: string) {
-        const action = changeTaskStatusAC(taskId, isDone, todoListID)
-        dispatchToTasksReducer(action)
-    }
-
-    function changeTaskTitle(taskId: string, newTitle: string, todoListID: string) {
-        dispatchToTasksReducer(changeTaskTitleAC(taskId, newTitle, todoListID))
-    }
-
-    function addTask(newTaskName: string, todoListID: string) {
-        const action = addTaskAC(newTaskName, todoListID)
-        dispatchToTasksReducer(action)
-    }
+    // function removeTask(taskId: string, todoListID: string) {
+    //     const action = removeTaskAC(taskId, todoListID)
+    //     dispatchToTasksReducer(action)
+    // }
+    //
+    // function changeTaskStatus(taskId: string, isDone: boolean, todoListID: string) {
+    //     const action = changeTaskStatusAC(taskId, isDone, todoListID)
+    //     dispatchToTasksReducer(action)
+    // }
+    //
+    // function changeTaskTitle(taskId: string, newTitle: string, todoListID: string) {
+    //     dispatchToTasksReducer(changeTaskTitleAC(taskId, newTitle, todoListID))
+    // }
+    //
+    // function addTask(newTaskName: string, todoListID: string) {
+    //     const action = addTaskAC(newTaskName, todoListID)
+    //     dispatchToTasksReducer(action)
+    // }
 
     function changeTodoListTitle(todoListID: string, newTitle: string) {
         dispatchToTodoListsReducer(changeTodolistTitleAC(todoListID, newTitle))

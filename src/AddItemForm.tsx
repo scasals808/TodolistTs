@@ -16,7 +16,7 @@ export const AddItemForm = React.memo((props: PropsType) => {
     }
 
     function onAddItemKeyPressed(event: KeyboardEvent<HTMLInputElement>) {
-        if(error !== null) setError(null)
+        if (error !== null) setError(null)
         if (event.key === 'Enter') {
             addItemLocal()
         }
@@ -34,16 +34,16 @@ export const AddItemForm = React.memo((props: PropsType) => {
     return (
         <div>
             <TextField size={"small"}
-                variant={'outlined'}
-                value={itemName}
-                onChange={onItemNameChanged}
-                onKeyPress={onAddItemKeyPressed}
-                error={!!error} //! - преобразование в булевый тип, !! - приведение в противоположный, className={error ? 'error' : ''}
-                label={'Title'}
-                helperText={error} //{error && <div className={'error_message'}>{error}</div>}
+                       variant={'outlined'}
+                       value={itemName}
+                       onChange={onItemNameChanged}
+                       onKeyPress={onAddItemKeyPressed}
+                       error={!!error} //! - преобразование в булевый тип, !! - приведение в противоположный, className={error ? 'error' : ''}
+                       label={'Title'}
+                       helperText={error} //{error && <div className={'error_message'}>{error}</div>}
             />
             <IconButton color={"primary"} onClick={addItemLocal}>
-                <AddBox />
+                <AddBox/>
             </IconButton>
         </div>
     )
