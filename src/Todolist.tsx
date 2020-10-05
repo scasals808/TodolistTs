@@ -9,7 +9,7 @@ import {AppRootStateType} from "./state/store";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 import {Task} from "./Task";
 import {todoListAPI} from "./api/todolist-api";
-import {setTodoListsAC} from "./state/todolists-reducer";
+
 
 
 type PropsType = {
@@ -62,13 +62,6 @@ export const Todolist = React.memo((props: PropsType) => {
     const changeTaskTitle = useCallback((taskId: string, newTitle: string) => {
         dispatch(changeTaskTitleAC(taskId, newTitle, props.todolist.id))
     }, [dispatch, props.todolist.id])
-
-    useEffect(() => {
-        todoListAPI.getTodoLists()
-            .then((res) => {
-                dispatch(setTodoListsAC(res.data))
-            })
-    }, [])
 
     return <div>
         <h3><EditableSpan title={props.todolist.title} saveNewTitle={changeTodoListTitle}/>

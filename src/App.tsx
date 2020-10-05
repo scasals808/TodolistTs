@@ -5,20 +5,10 @@ import {v1} from 'uuid';
 import {AddItemForm} from "./AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
-
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
+import {TaskType, TodoListType} from './api/todolist-api'
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
-export type TodoListType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>

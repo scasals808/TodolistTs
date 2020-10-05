@@ -1,13 +1,13 @@
 import axios from "axios";
 
-type todoListType = {
+export type TodoListType = {
     id: string
     title: string
     addedDate: string
     order: number
 }
 
-type TaskType = {
+export type TaskType = {
     items: {
         description: string | null
         title: string
@@ -41,10 +41,10 @@ const instance = axios.create({
 
 export const todoListAPI = {
     getTodoLists() {
-        return instance.get<Array<todoListType>>(`todo-lists`)
+        return instance.get<Array<TodoListType>>(`todo-lists`)
     },
     createTodo(title: string = 'angular') {
-        return instance.post<CommonResponseType<{ item: todoListType }>>(`todo-lists`, {title})
+        return instance.post<CommonResponseType<{ item: TodoListType }>>(`todo-lists`, {title})
     },
     deleteTodo(todoId: string) {
         return instance.delete<CommonResponseType>(`todo-lists/${todoId}`)
