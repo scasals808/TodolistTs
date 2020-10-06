@@ -1,5 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
-import {TaskType, FilterValuesType, TodoListType} from './AppWithRedux';
+import React, {useCallback} from 'react';
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
@@ -8,12 +7,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 import {Task} from "./Task";
-import {todoListAPI} from "./api/todolist-api";
+import {TaskStatuses, TaskType} from "./api/todolist-api";
+import {FilterValuesType, TodoListDomainType} from "./state/todolists-reducer";
 
 
 
 type PropsType = {
-    todolist: TodoListType
+    todolist: TodoListDomainType
     changeTodolistFilter: (todoListID: string, newFilterValue: FilterValuesType) => void
     changeTodoListTitle: (taskID: string, newTitle: string) => void
     removeTodoList: (todoListID: string) => void
@@ -26,10 +26,10 @@ export const Todolist = React.memo((props: PropsType) => {
     let allTodoListTasks = tasks
     let tasksForTodolist = allTodoListTasks
     if (props.todolist.filter === 'active') {
-        tasksForTodolist = allTodoListTasks.filter(task => task.isDone === false)
+        tasksForTodolist = allTodoListTasks.filter(task => task.status === TaskStatuses.New)
     }
     if (props.todolist.filter === 'completed') {
-        tasksForTodolist = allTodoListTasks.filter(task => task.isDone === true)
+        tasksForTodolist = allTodoListTasks.filter(task => task.status === TaskStatuses.Completed)
     }
 
     const onAllClickHandler = useCallback(() =>
@@ -55,7 +55,7 @@ export const Todolist = React.memo((props: PropsType) => {
         dispatch(removeTaskAC(taskId, props.todolist.id))
     }, [dispatch, props.todolist.id])
 
-    const changeStatus = useCallback((taskId: string, newCheckBoxValue: boolean) => {
+    const changeStatus = useCallback((taskId: string, newCheckBoxValue: TaskStatuses) => {
         dispatch(changeTaskStatusAC(taskId, newCheckBoxValue, props.todolist.id))
     }, [dispatch, props.todolist.id])
 

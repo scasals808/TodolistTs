@@ -7,22 +7,31 @@ export type TodoListType = {
     order: number
 }
 
+export enum TaskStatuses {
+    New = 0,
+    InProgress = 1,
+    Completed = 2,
+    Draft = 3
+}
+export enum TaskPriorities {
+    Low = 0,
+    Middle = 1,
+    Hi = 2,
+    Urgently = 3,
+    Later = 4
+}
+
 export type TaskType = {
-    items: {
-        description: string | null
-        title: string
-        completed: boolean
-        status: number
-        priority: number
-        startDate: string | null
-        deadline: string | null
-        id: string
-        todoListId: string
-        order: number
-        addedDate: string
-    }
-    "totalCount": number
-    "error": null | string
+    description: string
+    title: string
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
+    id: string
+    todoListId: string
+    order: number
+    addedDate: string
 }
 
 type CommonResponseType<T = {}> = {
@@ -61,7 +70,7 @@ export const todoListAPI = {
     deleteTask(todoId: string, taskId: string) {
         return instance.delete<CommonResponseType>(`todo-lists/${todoId}/tasks/${taskId}`)
     },
-    updateTask(todoId: string, taskId: string, title: string = ''){
+    updateTask(todoId: string, taskId: string, title: string = '') {
         return instance.put<CommonResponseType>(`todo-lists/${todoId}/tasks/${taskId}`, {title})
     }
 }

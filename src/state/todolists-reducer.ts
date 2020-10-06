@@ -57,7 +57,13 @@ export const todoListsReducer = (state: Array<TodoListDomainType> = InitialState
             return state.filter(todo => todo.id !== action.id)
         //не используем спред ...state т.к. метод .фильтр создает новый массив(не мутирует старый)
         case ADD_TODOLIST: {
-            return [{id: action.todolistId, filter: 'all', title: action.title}, ...state]
+            return [{
+                id: action.todolistId,
+                filter: 'all',
+                title: action.title,
+                addedDate: '',
+                order: 0
+            }, ...state]
         }
         case CHANGE_TODOLIST_TITLE:
             // const newTodoListTitle = state.find(todo => todo.id === action.id)
