@@ -7,6 +7,15 @@ export type TodoListType = {
     order: number
 }
 
+export type UpdateTaskModelType = {
+    title: string
+    description: string
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
+}
+
 export enum TaskStatuses {
     New = 0,
     InProgress = 1,
@@ -34,6 +43,12 @@ export type TaskType = {
     addedDate: string
 }
 
+type GetTaskResponse = {
+    error: string | null
+    totalCount: number
+    items: TaskType[]
+}
+
 type CommonResponseType<T = {}> = {
     resultCode: number
     messages: Array<string>
@@ -52,7 +67,7 @@ export const todoListAPI = {
     getTodoLists() {
         return instance.get<Array<TodoListType>>(`todo-lists`)
     },
-    createTodo(title: string = 'angular') {
+    createTodo(title: string) {
         return instance.post<CommonResponseType<{ item: TodoListType }>>(`todo-lists`, {title})
     },
     deleteTodo(todoId: string) {
@@ -62,15 +77,15 @@ export const todoListAPI = {
         return instance.put<CommonResponseType>(`todo-lists/${todoId}`, {title})
     },
     getTask(todoId: string) {
-        return instance.get<TaskType>(`todo-lists/${todoId}/tasks`)
+        return instance.get<GetTaskResponse>(`todo-lists/${todoId}/tasks`)
     },
     createTask(todoId: string, title: string = 'new task') {
-        return instance.post<CommonResponseType>(`todo-lists/${todoId}/tasks`, {title})
+        return instance.post<CommonResponseType<{ item: TaskType }>>(`todo-lists/${todoId}/tasks`, {title})
     },
     deleteTask(todoId: string, taskId: string) {
         return instance.delete<CommonResponseType>(`todo-lists/${todoId}/tasks/${taskId}`)
     },
-    updateTask(todoId: string, taskId: string, title: string = '') {
-        return instance.put<CommonResponseType>(`todo-lists/${todoId}/tasks/${taskId}`, {title})
+    updateTask(todoId: string, taskId: string, model: UpdateTaskModelType) {
+        return instance.put<CommonResponseType>(`todo-lists/${todoId}/tasks/${taskId}`, model)
     }
 }

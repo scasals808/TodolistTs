@@ -6,25 +6,26 @@ import {TaskStatuses, TaskType} from "./api/todolist-api";
 
 export type TaskPropsType = {
     task: TaskType
-    changeTaskTitle: (taskId: string, title: string) => void
-    changeStatus: (taskId: string, checked: TaskStatuses) => void
-    removeTask: (taskId: string) => void
+    changeTaskTitle: (taskId: string, title: string, todoId: string) => void
+    changeStatus: (taskId: string, checked: TaskStatuses, todoId: string) => void
+    removeTask: (todoId: string, taskId: string) => void
 }
 
 export const Task = React.memo((props: TaskPropsType) => {
-    let {id, title, status} = props.task
+    let {id, title, status, todoListId} = props.task
     const changeTaskTitle = useCallback((title: string) => {
-        props.changeTaskTitle(id, title)
+        props.changeTaskTitle(id, title, todoListId)
     }, [props, id])
     //в параметры коллбека нужно передать булево значение, хотя в типах у нас числа... используем тернарник который сразу резолвится, круто
-    let changeStatus = (event: ChangeEvent<HTMLInputElement>) => props.changeStatus(id, event.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New)
-    let removeTask = () => props.removeTask(id)
+    let changeStatus = (event: ChangeEvent<HTMLInputElement>) =>
+        props.changeStatus(id, event.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New, todoListId)
+    let removeTask = () => props.removeTask(todoListId, id)
 
     return (
-        <div key={id} className={props.task.status === TaskStatuses.Completed ? 'is_done' : ''}>
+        <div key={id} className={status === TaskStatuses.Completed ? 'is_done' : ''}>
             <Checkbox
                 color={'primary'}
-                checked={props.task.status === TaskStatuses.Completed}
+                checked={status === TaskStatuses.Completed}
                 onChange={changeStatus}
             />
             <EditableSpan title={title} saveNewTitle={changeTaskTitle}/>

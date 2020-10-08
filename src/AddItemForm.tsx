@@ -3,7 +3,8 @@ import {IconButton, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
 
 type PropsType = {
-    addItem: (title: string) => void
+    todoId: string
+    addItem: (title: string, todoId: string) => void
 }
 
 export const AddItemForm = React.memo((props: PropsType) => {
@@ -24,7 +25,7 @@ export const AddItemForm = React.memo((props: PropsType) => {
 
     function addItemLocal() {
         if (itemName.trim() !== '') {
-            props.addItem(itemName.trim());
+            props.addItem(itemName.trim(), props.todoId);
             setItemName('');
         } else {
             setError('Title is required!');

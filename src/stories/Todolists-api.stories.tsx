@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {todoListAPI} from "../api/todolist-api";
+import {todoListAPI, UpdateTaskModelType} from "../api/todolist-api";
 
 export default {
     title: 'API'
@@ -81,15 +81,15 @@ export const DeleteTask = () => {
 
     return <div> {JSON.stringify(state)}</div>
 }
-export const UpdateTaskTitle = () => {
-    const [state, setState] = useState<any>(null)
-    useEffect(() => {
-        let todoId = '3f60c03c-18c3-42f5-a46a-31942877c4c0'
-        let taskId = 'e75e1415-4eb5-4f79-a3b9-9f632fb74221'
-        let title = 'BLA BLA'
-        todoListAPI.updateTask(todoId, taskId, title)
-            .then(res => setState(res.data))
-    }, [])
-
-    return <div> {JSON.stringify(state)}</div>
-}
+// export const UpdateTaskTitle = () => {
+//     const [state, setState] = useState<any>(null)
+//     useEffect(() => {
+//         let todoId = '3f60c03c-18c3-42f5-a46a-31942877c4c0'
+//         let taskId = 'e75e1415-4eb5-4f79-a3b9-9f632fb74221'
+//         let title = {}
+//         todoListAPI.updateTask(todoId, taskId, title)
+//             .then(res => setState(res.data))
+//     }, [])
+//
+//     return <div> {JSON.stringify(state)}</div>
+// }
