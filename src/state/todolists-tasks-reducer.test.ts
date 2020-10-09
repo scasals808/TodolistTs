@@ -1,6 +1,7 @@
-import {TaskStateType, TodoListType} from "../AppWithRedux";
-import {addTodoListAC, removeTodoListAC, todoListsReducer} from "./todolists-reducer";
+import {TaskStateType} from "../AppWithRedux";
+import {addTodoListAC, removeTodoListAC, TodoListDomainType, todoListsReducer} from "./todolists-reducer";
 import {tasksReducer} from "./tasks-reducer";
+import {TaskPriorities, TaskStatuses, TodoListType} from "../api/todolist-api";
 
 
 let startState: TaskStateType
@@ -8,21 +9,38 @@ let startState: TaskStateType
 beforeEach(() => {
     startState = {
         "todolistId1": [
-            {id: "1", title: "CSS", isDone: false},
-            {id: "2", title: "JS", isDone: true},
-            {id: "3", title: "React", isDone: false}
+            {description: '', title: 'rfr', status: 0,
+                priority: 0, startDate: '', deadline: '',
+                id: 'fgh', todoListId: '', order: 0, addedDate: ''},
+            {description: '', title: 'rfr', status: 1,
+                priority: 0, startDate: '', deadline: '',
+                id: 'fgh', todoListId: '', order: 0, addedDate: ''},
+            {description: '', title: 'rfr', status: 0,
+                priority: 0, startDate: '', deadline: '',
+                id: 'fgh', todoListId: '', order: 0, addedDate: ''},
         ],
         "todolistId2": [
-            {id: "1", title: "bread", isDone: false},
-            {id: "2", title: "milk", isDone: true},
-            {id: "3", title: "tea", isDone: false}
+            {description: '', title: 'rfr', status: 0,
+                priority: 0, startDate: '', deadline: '',
+                id: 'fgzxczxh', todoListId: '', order: 0, addedDate: ''},
+            {description: '', title: 'rfr', status: 1,
+                priority: 0, startDate: '', deadline: '',
+                id: 'ww', todoListId: '', order: 0, addedDate: ''},
+            {description: '', title: 'rfr', status: 0,
+                priority: 0, startDate: '', deadline: '',
+                id: 'fgdfgh', todoListId: '', order: 0, addedDate: ''},
         ]
     }
 })
 
 test('new array should be added when new todolist is added', () => {
 
-    const action = addTodoListAC("new todolist");
+    const action = addTodoListAC({
+        id: 'blabla',
+        title: 'newTodo',
+        addedDate: '',
+        order: 0
+    });
 
     const endState = tasksReducer(startState, action)
 
@@ -50,9 +68,14 @@ test('property with todolistId should be deleted', () => {
 
 test('ids should be equals', () => {
     const startTasksState: TaskStateType = {};
-    const startTodoListsState: Array<TodoListType> = [];
+    const startTodoListsState: Array<TodoListDomainType> = [];
 
-    const action = addTodoListAC("new todolist");
+    const action = addTodoListAC({
+        id: 'ADD_TODOLIST',
+        title: 'newTodo',
+        addedDate: '',
+        order: 0
+    });
 
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodoListsState = todoListsReducer(startTodoListsState, action)
@@ -61,6 +84,6 @@ test('ids should be equals', () => {
     const idFromTasks = keys[0];
     const idFromTodoLists = endTodoListsState[0].id;
 
-    expect(idFromTasks).toBe(action.todolistId);
-    expect(idFromTodoLists).toBe(action.todolistId);
+    expect(idFromTasks).toBe(action.todo.id);
+    expect(idFromTodoLists).toBe(action.todo.id);
 });
