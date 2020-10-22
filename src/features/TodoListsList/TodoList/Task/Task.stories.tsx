@@ -1,7 +1,7 @@
 import React from "react";
 import {action} from "@storybook/addon-actions";
-import {Task} from "../Task";
-import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
+import {Task} from "./Task";
+import {TaskPriorities, TaskStatuses} from "../../../../api/todolist-api";
 
 export default {
     title: 'Todolist/Task Stories',
@@ -13,7 +13,7 @@ const removeTask = action('Remove button inside Task clicked')
 const changeStatus = action('Status changed inside Task clicked')
 const changeTaskTitle = action('Title changed inside Task clicked')
 
-export const TaskBaseExample = (props: any) => {
+export const TaskBaseExample = () => {
     return (<div>
         <Task
             task={{id: '1', status: TaskStatuses.Completed, title: 'CSS', todoListId: '', description: '',

@@ -1,20 +1,19 @@
 import React, {useCallback, useEffect} from 'react';
-import {AddItemForm} from "./AddItemForm";
-import {EditableSpan} from "./EditableSpan";
+import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
+import {EditableSpan} from "../../../components/EditableSpan/EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./state/store";
+import {AppRootStateType} from "../../../app/store";
 import {
     addTaskTC,
     getTasksTC,
     removeTaskTC,
     updateTaskTC
-} from "./state/tasks-reducer";
-import {Task} from "./Task";
-import {TaskStatuses, TaskType} from "./api/todolist-api";
-import {FilterValuesType, TodoListDomainType} from "./state/todolists-reducer";
-
+} from "../tasks-reducer";
+import {Task} from "./Task/Task";
+import {TaskStatuses, TaskType} from "../../../api/todolist-api";
+import {FilterValuesType, TodoListDomainType} from "../todolists-reducer";
 
 
 type PropsType = {
@@ -61,12 +60,12 @@ export const Todolist = React.memo((props: PropsType) => {
         props.changeTodoListTitle(props.todolist.id, newTitle)
     }, [props])
 
-    const addTask = useCallback(( title: string, todoId: string) => {
+    const addTask = useCallback((title: string, todoId: string) => {
         dispatch(addTaskTC(todoId, title))
     }, [])
 
     const changeStatus = useCallback((taskId: string, status: TaskStatuses, todoId: string) => {
-        dispatch(updateTaskTC(todoId, {status}, taskId ))
+        dispatch(updateTaskTC(todoId, {status}, taskId))
     }, [])
 
     const changeTaskTitle = useCallback((taskId: string, newTitle: string, todoId: string) => {

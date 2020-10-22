@@ -1,6 +1,6 @@
 import React from "react";
 import {action} from "@storybook/addon-actions";
-import {AddItemForm} from "../AddItemForm";
+import {AddItemForm} from "./AddItemForm";
 
 export default {
     title: 'Todolist/AddItemForm Stories',
@@ -8,7 +8,7 @@ export default {
 
 }
 
-export const AddItemFormBaseExample = (props: any) => {
+export const AddItemFormBaseExample = () => {
     return (<AddItemForm
         addItem={action('Button inside form clicked')}
         todoId={'zxc'}
