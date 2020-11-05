@@ -1,7 +1,5 @@
-import {TaskStateType} from "../../app/App";
 import {addTodoListAC, removeTodoListAC, TodoListDomainType, todoListsReducer} from "./todolists-reducer";
-import {tasksReducer} from "./tasks-reducer";
-
+import {tasksReducer, TaskStateType} from "./tasks-reducer";
 
 let startState: TaskStateType
 
@@ -56,9 +54,7 @@ test('new array should be added when new todolist is added', () => {
 test('property with todolistId should be deleted', () => {
 
     const action = removeTodoListAC("todolistId2");
-
     const endState = tasksReducer(startState, action)
-
     const keys = Object.keys(endState);
 
     expect(keys.length).toBe(1);

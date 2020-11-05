@@ -5,9 +5,10 @@ import {AddBox} from "@material-ui/icons";
 type PropsType = {
     todoId: string
     addItem: (title: string, todoId: string) => void
+    disabled?: boolean
 }
 
-export const AddItemForm = React.memo((props: PropsType) => {
+export const AddItemForm = React.memo(({addItem, disabled = false, todoId}: PropsType) => {
     let [itemName, setItemName] = useState<string>('')
     let [error, setError] = useState<string | null>(null)
 
@@ -25,7 +26,7 @@ export const AddItemForm = React.memo((props: PropsType) => {
 
     function addItemLocal() {
         if (itemName.trim() !== '') {
-            props.addItem(itemName.trim(), props.todoId);
+            addItem(itemName.trim(), todoId);
             setItemName('');
         } else {
             setError('Title is required!');
@@ -35,6 +36,7 @@ export const AddItemForm = React.memo((props: PropsType) => {
     return (
         <div>
             <TextField size={"small"}
+                       disabled={disabled}
                        variant={'outlined'}
                        value={itemName}
                        onChange={onItemNameChanged}
@@ -43,7 +45,7 @@ export const AddItemForm = React.memo((props: PropsType) => {
                        label={'Title'}
                        helperText={error} //{error && <div className={'error_message'}>{error}</div>}
             />
-            <IconButton color={"primary"} onClick={addItemLocal}>
+            <IconButton color={"primary"} onClick={addItemLocal} disabled={disabled}>
                 <AddBox/>
             </IconButton>
         </div>

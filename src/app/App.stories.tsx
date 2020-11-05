@@ -10,7 +10,7 @@ export default {
 } as Meta
 
 export const AppBaseExample = () => {
-    return (<App/>)
+    return (<App demo={true}/>)
 };
 
 

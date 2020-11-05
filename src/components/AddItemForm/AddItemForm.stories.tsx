@@ -14,3 +14,10 @@ export const AddItemFormBaseExample = () => {
         todoId={'zxc'}
     />)
 };
+
+export const AddItemFormDisabledExample = () => {
+    return (<AddItemForm disabled={true}
+        addItem={action('Button inside form clicked')}
+        todoId={'zxc'}
+    />)
+};
