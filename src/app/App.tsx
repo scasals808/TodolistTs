@@ -1,10 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import {
-    AppBar,Button, CircularProgress,
-    Container, IconButton, LinearProgress,
-    Toolbar, Typography
-} from "@material-ui/core";
+import {AppBar, Button, CircularProgress, Container, IconButton, LinearProgress, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {TodoListsList} from "../features/TodoListsList/TodoListsList";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/Errorsnackbar";
@@ -26,7 +22,9 @@ function App({demo = false}: PropsType) {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(initializeAppTC())
+        if (!demo) {
+            dispatch(initializeAppTC())
+        }
     }, [])
 
     const logoutHandler = useCallback(() => {
@@ -56,12 +54,12 @@ function App({demo = false}: PropsType) {
                 {status === 'loading' && <LinearProgress/>}
             </AppBar>
             <Container fixed>
-                <Switch>
-                    <Route exact path={'/'} render={() => <TodoListsList demo={demo}/>}/>
-                    <Route path={'/login'} render={() => <Login/>}/>
-                    <Route path={'/404'} render={() => <h1>404: PAGE NOT FOUND</h1>}/>
-                    <Redirect from={'*'} to={'/404'}/>
-                </Switch>
+                    <Switch>
+                        <Route exact path={'/'} render={() => <TodoListsList demo={demo}/>}/>
+                        <Route path={'/login'} render={() => <Login/>}/>
+                        <Route path={'/404'} render={() => <h1>404: PAGE NOT FOUND</h1>}/>
+                        <Redirect from={'*'} to={'/404'}/>
+                    </Switch>
             </Container>
         </div>
     );

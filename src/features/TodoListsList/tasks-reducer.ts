@@ -1,9 +1,7 @@
 import {
     addTodoListAC,
     removeTodoListAC,
-    setTodoListsAC,
-    RemoveTodolistActionType,
-    SetTodoListsActionType
+    setTodoListsAC
 } from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses, TaskType, todoListAPI, UpdateTaskModelType} from "../../api/todolist-api";
 import {Dispatch} from "redux";
@@ -33,8 +31,8 @@ const slice = createSlice({
                 tasks.splice(index, 1)
             }
         },
-        addTaskAC(state, action: PayloadAction<{ task: TaskType }>) {
-            state[action.payload.task.todoListId].unshift(action.payload.task)
+        addTaskAC(state, action: PayloadAction<TaskType>) {
+            state[action.payload.todoListId].unshift(action.payload)
         },
         updateTaskAC(state, action: PayloadAction<{ taskId: string, model: UpdateDomainTaskModelType, todoId: string }>) {
             const tasks = state[action.payload.todoId]
@@ -132,7 +130,7 @@ export const addTaskTC = (todoId: string, title: string) => (dispatch: Dispatch)
     todoListAPI.createTask(todoId, title)
         .then((res) => {
             if (res.data.resultCode === 0) {
-                dispatch(addTaskAC({task: res.data.data.item}))
+                dispatch(addTaskAC(res.data.data.item))
                 dispatch(setAppStatusAC({status: 'succeeded'}))
             } else {
                 handleServerAppError(res.data, dispatch)

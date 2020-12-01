@@ -32,12 +32,12 @@ beforeEach(() => {
 
 test('new array should be added when new todolist is added', () => {
 
-    const action = addTodoListAC({
+    const action = addTodoListAC({todo:{
         id: 'blabla',
         title: 'newTodo',
         addedDate: '',
         order: 0
-    });
+    }});
 
     const endState = tasksReducer(startState, action)
 
@@ -53,7 +53,7 @@ test('new array should be added when new todolist is added', () => {
 
 test('property with todolistId should be deleted', () => {
 
-    const action = removeTodoListAC("todolistId2");
+    const action = removeTodoListAC({id: "todolistId2"});
     const endState = tasksReducer(startState, action)
     const keys = Object.keys(endState);
 
@@ -65,12 +65,12 @@ test('ids should be equals', () => {
     const startTasksState: TaskStateType = {};
     const startTodoListsState: Array<TodoListDomainType> = [];
 
-    const action = addTodoListAC({
+    const action = addTodoListAC({todo:{
         id: 'ADD_TODOLIST',
         title: 'newTodo',
         addedDate: '',
         order: 0
-    });
+    }});
 
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodoListsState = todoListsReducer(startTodoListsState, action)
@@ -79,6 +79,6 @@ test('ids should be equals', () => {
     const idFromTasks = keys[0];
     const idFromTodoLists = endTodoListsState[0].id;
 
-    expect(idFromTasks).toBe(action.todo.id);
-    expect(idFromTodoLists).toBe(action.todo.id);
+    expect(idFromTasks).toBe(action.payload.todo.id);
+    expect(idFromTodoLists).toBe(action.payload.todo.id);
 });
